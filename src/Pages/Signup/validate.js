@@ -1,6 +1,6 @@
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export const validateLoginForm = (name, email, password, picture, user) => {
+export const validateLoginForm = (name, email, password, user) => {
   const errors = {};
   console.log(user);
 
@@ -24,10 +24,6 @@ export const validateLoginForm = (name, email, password, picture, user) => {
     if (numberCount < 2) {
       errors.password = "Password must contain at least 2 numbers.";
     }
-  }
-
-  if (!picture) {
-    errors.picture = "You must upload a profile picture";
   }
 
   if (user) {

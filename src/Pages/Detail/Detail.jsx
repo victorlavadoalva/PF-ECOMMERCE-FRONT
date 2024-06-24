@@ -12,7 +12,6 @@ import {
 } from "../../Redux/Actions";
 import axios from "../../axios";
 import style from "./Detail.module.css";
-import Galery from "./components/Galery";
 import { Reviews } from "./components/Reviews/Reviews";
 import Starts from "./components/Starts";
 import { About } from "./components/about/About";
@@ -37,18 +36,6 @@ function Detail({ addFavorite, removeFavorite, myFavorites }) {
   const { productId } = useSelector((state) => state);
 
   const [purchasedGame, setPurchasedGame] = useState("");
-
-  const notifyToLogin = () =>
-    toast("You must be registered to view the product!", {
-      icon: "🚧",
-      style: {
-        borderRadius: "10px",
-        background: "#fff",
-        color: "#333",
-      },
-      duration: 3000,
-      position: "bottom-right",
-    });
 
   useEffect(() => {
     axios.get(`/products/${id}`).then(({ data }) => {
@@ -241,9 +228,7 @@ function Detail({ addFavorite, removeFavorite, myFavorites }) {
                 </div>
                 <Starts rating={ratingValue || 0} />
               </div>
-              <div className={style.contRight}>
-                <Galery imgs={productId.pictures} />
-              </div>
+
               <hr className={style.hrPrimero} />
 
               <div className={style.seccionesDetail}>

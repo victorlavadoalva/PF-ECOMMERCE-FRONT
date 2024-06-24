@@ -65,12 +65,6 @@ export default function MostSold() {
             stock={product.stock}
             to={`/store/detail/${product._id ? product._id : product.id}`}
           >
-            <img
-              src={product.pictures[0]}
-              alt={product.name}
-              width="100%"
-              height="50%"
-            />
             <MostSoldDetails>
               <MostSoldName>{product.name}</MostSoldName>
               <MostSoldText>Price: {product.price}</MostSoldText>

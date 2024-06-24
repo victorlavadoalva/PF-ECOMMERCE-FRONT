@@ -3,7 +3,6 @@ import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import axios from "../../axios";
 import "./NewProduct.css";
 
 import { createProduct } from "../../Redux/Actions";
@@ -44,72 +43,24 @@ export default function NewProduct() {
   const [stock, setStock] = useState("");
   const [category, setCategory] = useState("");
   const [platform, setPlatform] = useState("");
-  const [pictures, setPictures] = useState([]);
-  const [imgToRemove, setImgToRemove] = useState(null);
-
-  function handleRemoveImg(imgObj) {
-    setImgToRemove(imgObj.public_id);
-    axios
-      .delete(`/images/${imgObj.public_id}/`)
-      .then((res) => {
-        setImgToRemove(null);
-        setPictures((prev) =>
-          prev.filter((img) => img.public_id !== imgObj.public_id)
-        );
-      })
-      .catch((e) => console.log(e));
-  }
+  // const [pictures, setPictures] = useState([]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (
-      !name ||
-      !description ||
-      !price ||
-      !category ||
-      !platform ||
-      !stock ||
-      !pictures.length
-    ) {
+    if (!name || !description || !price || !category || !platform || !stock) {
       return notifyError();
     }
 
     //Aca el dispatch de create product
     console.log(stock, "stock");
     dispatch(
-      createProduct(
-        name,
-        description,
-        price,
-        category,
-        platform,
-        pictures,
-        stock
-      )
+      createProduct(name, description, price, category, platform, stock)
     );
 
     setTimeout(() => {
       notify();
       navigate("/store");
     }, 1000);
-  }
-
-  function showWidget() {
-    const widget = window.cloudinary.createUploadWidget(
-      {
-        cloudName: "diiu7oy9z",
-        uploadPreset: "front-end-preset",
-      },
-      (error, result) => {
-        if (!error && result.event === "success") {
-          setPictures((prev) => [
-            ...prev,
-            { url: result.info.url, public_id: result.info.public_id },
-          ]);
-        }
-      }
-    );
-    widget.open();
   }
 
   return (
@@ -189,26 +140,6 @@ export default function NewProduct() {
             value={stock}
             onChange={(e) => setStock(e.target.value)}
           />
-        </div>
-      </div>
-
-      <div className="imgsProducts">
-        <button type="button" onClick={showWidget}>
-          Upload Images
-        </button>
-        <div className="images-preview-container">
-          {pictures.length ? (
-            pictures.map((image) => (
-              <div className="image-preview">
-                <img src={image.url} alt="Preview" />
-                {imgToRemove !== image.public_id && (
-                  <i onClick={() => handleRemoveImg(image)}>X</i>
-                )}
-              </div>
-            ))
-          ) : (
-            <label>Upload an image</label>
-          )}
         </div>
       </div>
 

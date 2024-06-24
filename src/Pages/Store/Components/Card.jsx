@@ -1,13 +1,10 @@
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { A11y, Navigation, Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/bundle";
 import "swiper/css/navigation";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { addToCart } from "../../../Redux/Actions";
-import defaultImg from "../../../img/default.jpg";
 import style from "./Card.module.css";
 
 const Card = ({ data }) => {
@@ -66,32 +63,6 @@ const Card = ({ data }) => {
         }
         key={data.id}
       >
-        <div className={style.containerImgs}>
-          <Swiper
-            className={style.tamano}
-            modules={[Navigation, Pagination, A11y]}
-            spaceBetween={50}
-            slidesPerView={1}
-            pagination={{ clickable: true }}
-          >
-            {data.pictures.map((picture) => (
-              <SwiperSlide key={picture}>
-                {(typeof picture === "string" && picture.endsWith(".jpg")) ||
-                picture.endsWith(".jpeg") ||
-                picture.endsWith(".gif") ||
-                picture.endsWith(".png") ? (
-                  <img className={style.imgs} src={picture} alt={data.name} />
-                ) : (
-                  <img
-                    className={style.imgs}
-                    src={defaultImg}
-                    alt={data.name}
-                  />
-                )}
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
         <div className={style.info}>
           <div>
             <h2>{data.name}</h2>

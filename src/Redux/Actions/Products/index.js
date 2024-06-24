@@ -281,7 +281,6 @@ export const createProduct = (
   price,
   category,
   platform,
-  pictures,
   stock
 ) => {
   return function (dispatch) {
@@ -291,7 +290,6 @@ export const createProduct = (
       price,
       category,
       platform,
-      pictures,
       stock,
       "esto es en el createproduct actions"
     );
@@ -303,7 +301,6 @@ export const createProduct = (
         price,
         category,
         platform,
-        pictures,
         stock,
       })
       .then((response) => {

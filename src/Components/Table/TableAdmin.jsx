@@ -9,10 +9,10 @@ const TableAdmin = () => {
   const products = useSelector((state) => state.allProducts);
 
   const columns = [
-    {
-      name: "Image",
-      cell: (row) => <img className="img" src={row.pictures[0]} />,
-    },
+    // {
+    //   name: "Image",
+    //   cell: (row) => <img className="img" src={row.pictures[0]} />,
+    // },
     { name: "Product ID", selector: (row) => row.id, sortable: true },
     { name: "Product Name", selector: (row) => row.name, sortable: true },
     { name: "Product Price	", selector: (row) => row.price, sortable: true },

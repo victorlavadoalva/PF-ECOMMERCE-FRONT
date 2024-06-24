@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { RiLockPasswordLine, RiMailLine, RiUser3Line } from 'react-icons/ri';
+import { RiLockPasswordLine, RiMailLine, RiUser3Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LoadingForm, LoginGoogle } from "../../Components";
 import { StyledLink } from "../../ComponentsStyles";
 import { LoadingActionForm, signup } from "../../Redux/Actions";
-import axios from "../../axios";
 import styles from "./Signup.module.css";
 import { validateLoginForm } from "./validate";
 
@@ -31,7 +30,6 @@ function Signup() {
           name: "",
           email: "",
           password: "",
-          picture: "",
         });
         dispatch(LoadingActionForm(false));
         navigate("/");
@@ -67,9 +65,9 @@ function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { name, email, password, picture } = values;
+    const { name, email, password } = values;
 
-    const validationErrors = validateLoginForm(name, email, password, picture);
+    const validationErrors = validateLoginForm(name, email, password);
     setErrors(validationErrors);
 
     console.log(errors, "errors");
@@ -78,49 +76,49 @@ function Signup() {
     }
 
     dispatch(LoadingActionForm(true));
-    dispatch(signup({ name, email, password, picture }));
+    dispatch(signup({ name, email, password }));
     setErrors({});
   };
 
   //imagen
-  const [picture, setPicture] = useState([]);
-  const [imgToRemove, setImgToRemove] = useState(null);
+  // const [picture, setPicture] = useState([]);
+  // const [imgToRemove, setImgToRemove] = useState(null);
 
-  function showWidget() {
-    const widget = window.cloudinary.createUploadWidget(
-      {
-        cloudName: "diiu7oy9z",
-        uploadPreset: "front-end-preset",
-      },
-      (error, result) => {
-        if (!error && result.event === "success") {
-          const imageUrl = result.info.url;
-          const publicId = result.info.public_id;
-          setPicture([{ url: imageUrl, public_id: publicId }]);
-          setValues((prevValues) => ({
-            ...prevValues,
-            picture: imageUrl,
-          }));
-        }
-      }
-    );
-    widget.open();
-  }
+  // function showWidget() {
+  //   const widget = window.cloudinary.createUploadWidget(
+  //     {
+  //       cloudName: "diiu7oy9z",
+  //       uploadPreset: "front-end-preset",
+  //     },
+  //     (error, result) => {
+  //       if (!error && result.event === "success") {
+  //         const imageUrl = result.info.url;
+  //         const publicId = result.info.public_id;
+  //         setPicture([{ url: imageUrl, public_id: publicId }]);
+  //         setValues((prevValues) => ({
+  //           ...prevValues,
+  //           picture: imageUrl,
+  //         }));
+  //       }
+  //     }
+  //   );
+  //   widget.open();
+  // }
 
-  function handleRemoveImg(imgObj) {
-    setValues({
-      ...values,
-      picture: "",
-    });
-    setImgToRemove(imgObj.public_id);
-    axios
-      .delete(`/images/${imgObj.public_id}/`)
-      .then((res) => {
-        setImgToRemove(null);
-        setPicture([]);
-      })
-      .catch((e) => console.log(e));
-  }
+  // function handleRemoveImg(imgObj) {
+  //   setValues({
+  //     ...values,
+  //     picture: "",
+  //   });
+  //   setImgToRemove(imgObj.public_id);
+  //   axios
+  //     .delete(`/images/${imgObj.public_id}/`)
+  //     .then((res) => {
+  //       setImgToRemove(null);
+  //       setPicture([]);
+  //     })
+  //     .catch((e) => console.log(e));
+  // }
 
   return (
     <div className={styles.DivContainerForm}>
@@ -129,30 +127,8 @@ function Signup() {
           <LoadingForm />
         </div>
       )}
-      <div className={styles.userImg}>
-
-        {
-          picture.length ? (
-            <>
-              <img src={picture[0].url} alt="Preview" />
-              {imgToRemove !== picture[0].public_id && (
-                <label onClick={() => handleRemoveImg(picture[0])}>X</label>
-                )}
-            </>
-          ) 
-          : (
-            <div onClick={showWidget}>
-              Upload Image
-            </div>
-          )
-        }
-        
-      </div>
       <div className={styles.DivForm}>
-        
-        {errors.picture && (
-          <p className={styles.errors}>{errors.picture}</p>
-        )}
+        {errors.picture && <p className={styles.errors}>{errors.picture}</p>}
 
         <form className={styles.formhtml} onSubmit={handleSubmit}>
           <div className={styles.inputGroup}>
@@ -194,14 +170,18 @@ function Signup() {
           )}
 
           <div className={styles.actions}>
-            <button className={styles.cancel} onClick={() => navigate('/')}><b>Cancel</b></button>
-            <button type="submit" className={styles.submitButton}>Create Account</button>
+            <button className={styles.cancel} onClick={() => navigate("/")}>
+              <b>Cancel</b>
+            </button>
+            <button type="submit" className={styles.submitButton}>
+              Create Account
+            </button>
           </div>
         </form>
         <div className={styles.separador}>
-              <hr />
-              <label>O</label>
-              <hr />
+          <hr />
+          <label>O</label>
+          <hr />
         </div>
         <LoginGoogle />
         <p className={styles.signup}>
