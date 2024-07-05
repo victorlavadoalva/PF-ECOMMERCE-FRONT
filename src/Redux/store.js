@@ -5,6 +5,8 @@ import rootReducer from "./reducer";
 
 // Recupera los datos del localStorage
 const storedUser = localStorage.getItem("user");
+const attendance = localStorage.getItem("attendance");
+const bathroom = localStorage.getItem("bathroom");
 const storedAllProducts = localStorage.getItem("allProducts");
 const storedproducts = localStorage.getItem("products");
 const storedMyFavorites = localStorage.getItem("myFavorites");
@@ -12,6 +14,8 @@ const initialState = {
   // localStorage.setItem("user", JSON.stringify(users));
   // Utiliza los datos almacenados para inicializar el estado de Redux
   user: storedUser ? JSON.parse(storedUser) : null,
+  attendance: attendance ? JSON.parse(attendance) : null,
+  bathroom: bathroom ? JSON.parse(bathroom) : null,
   allProducts: storedAllProducts ? JSON.parse(storedAllProducts) : null,
   products: storedproducts ? JSON.parse(storedproducts) : null,
   myFavorites: storedMyFavorites ? JSON.parse(storedMyFavorites) : null,

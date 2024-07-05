@@ -4,13 +4,17 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { Navbar } from "../../Components";
 import { Aside, Main } from "../../ComponentsStyles";
 import AdminOrders from "../../Pages/AdminOrders/AdminOrders";
+import Attendance from "../../Pages/Attendance/Attendance";
 import { BannedView } from "../../Pages/Banned/BannedView";
+import Bathroom from "../../Pages/Bathroom/Bathroom";
+import Break from "../../Pages/Break/Break";
 import Cart from "../../Pages/Cart/Cart";
 import { DashboardAdminUserProduct } from "../../Pages/DashboardAdminUserProduct/DashboardAdminUserProduct";
 import Detail from "../../Pages/Detail/Detail";
 import Favorites from "../../Pages/Favorites/Favorites";
 import Home from "../../Pages/Home/Home";
 import Login from "../../Pages/Login/Login";
+import Lunch from "../../Pages/Lunch/Lunch";
 import NewProduct from "../../Pages/NewProduct/NewProduct";
 import Orders from "../../Pages/Orders/Orders";
 import Profile from "../../Pages/Profile/Profile";
@@ -55,6 +59,10 @@ function RoutesMain() {
             <Route path="/orders" element={<Orders />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/banned" element={<BannedView />} />
+            <Route path="/attendance" element={<Attendance />} />
+            <Route path="/lunch" element={<Lunch />} />
+            <Route path="/break" element={<Break />} />
+            <Route path="/bathroom" element={<Bathroom />} />
             {/* <Route path="/logout" element={<Home />} /> */}
           </Route>
 

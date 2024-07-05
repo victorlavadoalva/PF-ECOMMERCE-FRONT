@@ -80,46 +80,6 @@ function Signup() {
     setErrors({});
   };
 
-  //imagen
-  // const [picture, setPicture] = useState([]);
-  // const [imgToRemove, setImgToRemove] = useState(null);
-
-  // function showWidget() {
-  //   const widget = window.cloudinary.createUploadWidget(
-  //     {
-  //       cloudName: "diiu7oy9z",
-  //       uploadPreset: "front-end-preset",
-  //     },
-  //     (error, result) => {
-  //       if (!error && result.event === "success") {
-  //         const imageUrl = result.info.url;
-  //         const publicId = result.info.public_id;
-  //         setPicture([{ url: imageUrl, public_id: publicId }]);
-  //         setValues((prevValues) => ({
-  //           ...prevValues,
-  //           picture: imageUrl,
-  //         }));
-  //       }
-  //     }
-  //   );
-  //   widget.open();
-  // }
-
-  // function handleRemoveImg(imgObj) {
-  //   setValues({
-  //     ...values,
-  //     picture: "",
-  //   });
-  //   setImgToRemove(imgObj.public_id);
-  //   axios
-  //     .delete(`/images/${imgObj.public_id}/`)
-  //     .then((res) => {
-  //       setImgToRemove(null);
-  //       setPicture([]);
-  //     })
-  //     .catch((e) => console.log(e));
-  // }
-
   return (
     <div className={styles.DivContainerForm}>
       {loadingLoagin_Register && (

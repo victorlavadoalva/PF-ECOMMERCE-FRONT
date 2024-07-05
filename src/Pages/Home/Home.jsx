@@ -4,8 +4,8 @@ import { Outlet, useLocation } from "react-router";
 import { DivContainer } from "../../ComponentsStyles";
 import { getProducts, getUsers } from "../../Redux/Actions";
 import styles from "./Home.module.css";
-import Slide from "./components/Slide/Slides";
 import MostSold from "./components/MostSold/MostSold";
+import Slide from "./components/Slide/Slides";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ export default function Home() {
               <Slide />
             </div>
           </div>
-            <MostSold />
+          <MostSold />
         </DivContainer>
       )}
 

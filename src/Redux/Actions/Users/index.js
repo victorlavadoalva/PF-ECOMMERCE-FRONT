@@ -1,16 +1,14 @@
 import axios from "../../../axios";
 import {
+  ADD_FAVORITE,
   CLEAR_ERRORS,
   CREATE_ORDER,
-  ERROR_LOGIN,
   ERROR_REGISTER,
   GET_USERS,
-  LOGIN,
   LOGIN_GOOGLE,
   LOGOUT,
-  SIGNUP,
   REMOVE_FAVORITE,
-  ADD_FAVORITE,
+  SIGNUP,
   UPDATE_USER,
 } from "../../actionsTypes";
 
@@ -88,31 +86,56 @@ export const signup = (payload) => {
 export const login = (payload) => {
   return function (dispatch) {
     const { email, password } = payload;
+    let users;
+
     axios
       .post("/users/login", { email, password })
       .then((response) => {
-        const users = response.data;
+        users = response.data;
         localStorage.setItem("user", JSON.stringify(users));
-        dispatch({ type: LOGIN, payload: users });
+        dispatch({ type: "LOGIN", payload: users });
+        return axios.get(`/attendance`, { params: { usuarioId: users._id } });
+      })
+      .then((getResponse) => {
+        const getAttendance = getResponse.data;
+        dispatch({ type: "GET_ATTENDANCE", payload: getAttendance });
+        return axios.get(`http://localhost:3001/bathroom`, {
+          params: { usuarioId: users._id },
+        });
+      })
+      .then((bathroomResponse) => {
+        const getBathroom = bathroomResponse.data;
+        if (
+          getBathroom.message ===
+          "No se encontraron registros de baño para el usuario dado"
+        ) {
+          // Manejar el caso donde no se encontraron registros de baño
+          dispatch({
+            type: "NO_BATHROOM_RECORDS",
+            payload: getBathroom.message,
+          });
+        } else {
+          dispatch({ type: "GET_BATHROOM", payload: getBathroom });
+        }
       })
       .catch((error) => {
-        console.log(`Error en el login: ${error}`);
+        console.log(`Error en el login o en el GET: ${error}`);
         if (error.response && error.response.status === 404) {
           const errorMessage = error.response.data;
           dispatch({
-            type: ERROR_LOGIN,
+            type: "ERROR_LOGIN",
             payload: { message: errorMessage, status: 404 },
           });
         } else if (error.response && error.response.status === 403) {
           const errorMessage = error.response.data;
           dispatch({
-            type: ERROR_LOGIN,
+            type: "ERROR_LOGIN",
             payload: { message: errorMessage, status: 403 },
           });
         } else {
           const errorMessage = error.response.data;
           dispatch({
-            type: ERROR_LOGIN,
+            type: "ERROR_LOGIN",
             payload: { message: errorMessage, status: error.response.status },
           });
         }
@@ -164,7 +187,11 @@ export const createOrder = (payload) => {
 export const addFavorite = (user, product) => {
   return function (dispatch) {
     axios
-      .post(`/users/update-favorites`, { userId: user._id, favorites: product, type:"ADD" })
+      .post(`/users/update-favorites`, {
+        userId: user._id,
+        favorites: product,
+        type: "ADD",
+      })
       .then((response) => {
         const user = response.data;
         dispatch({ type: ADD_FAVORITE, payload: product });
@@ -176,11 +203,15 @@ export const addFavorite = (user, product) => {
 };
 
 export const removeFavorite = (user, product) => {
-  console.log("Entra a remove")
+  console.log("Entra a remove");
   // console.log(id)
   return function (dispatch) {
     axios
-      .post(`/users/update-favorites`, { userId: user._id, favorites: product, type:"REMOVE" })
+      .post(`/users/update-favorites`, {
+        userId: user._id,
+        favorites: product,
+        type: "REMOVE",
+      })
       .then((response) => {
         const user = response.data;
         dispatch({ type: REMOVE_FAVORITE, payload: product._id });

@@ -1,8 +1,16 @@
-import { AiFillAppstore, AiFillFire } from "react-icons/ai";
-import { CgList, CgProfile, CgShoppingCart } from "react-icons/cg";
+import { AiFillAppstore } from "react-icons/ai";
+import { CgList, CgProfile } from "react-icons/cg";
+import { FaToilet } from "react-icons/fa";
 import { HiHome } from "react-icons/hi";
 import { LuLogIn, LuLogOut } from "react-icons/lu";
-import { MdCreateNewFolder, MdOutlineAdminPanelSettings } from "react-icons/md";
+import {
+  MdAccessTime,
+  MdCreateNewFolder,
+  MdOutlineAdminPanelSettings,
+  MdOutlineCoffee,
+  MdOutlineLunchDining,
+} from "react-icons/md";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Nav, StyledLink } from "../../ComponentsStyles";
@@ -21,6 +29,8 @@ export default function Navbar() {
     dispatch(logoutUser());
     // Borra el usuario del localStorage
     localStorage.removeItem("user");
+    localStorage.removeItem("bathroom");
+    localStorage.removeItem("attendance");
     // Redirige al usuario a la página de inicio
     navigate("/");
   };
@@ -48,7 +58,7 @@ export default function Navbar() {
                 Home
               </li>
             </StyledLink>
-            <StyledLink to="/store">
+            {/* <StyledLink to="/store">
               <li>
                 <AiFillFire
                   size={25}
@@ -57,7 +67,7 @@ export default function Navbar() {
                 />{" "}
                 Store
               </li>
-            </StyledLink>
+            </StyledLink> */}
             <StyledLink to="/favorites">
               <li>
                 <AiFillAppstore
@@ -68,7 +78,7 @@ export default function Navbar() {
                 Favorites
               </li>
             </StyledLink>
-            <StyledLink to="/cart">
+            {/* <StyledLink to="/cart">
               <li>
                 <CgShoppingCart
                   size={25}
@@ -81,6 +91,50 @@ export default function Navbar() {
                     {user.cart.count > 0 ? user.cart.count : 0}
                   </div>
                 )}
+              </li>
+            </StyledLink> */}
+
+            <StyledLink to="/attendance">
+              <li>
+                <MdAccessTime
+                  size={25}
+                  style={{ marginBottom: "5px" }}
+                  className={styles.iconsNav}
+                />{" "}
+                Asistencia
+              </li>
+            </StyledLink>
+
+            <StyledLink to="/lunch">
+              <li>
+                <MdOutlineLunchDining
+                  size={25}
+                  style={{ marginBottom: "5px" }}
+                  className={styles.iconsNav}
+                />{" "}
+                Almuerzo
+              </li>
+            </StyledLink>
+
+            <StyledLink to="/break">
+              <li>
+                <MdOutlineCoffee
+                  size={25}
+                  style={{ marginBottom: "5px" }}
+                  className={styles.iconsNav}
+                />{" "}
+                Break
+              </li>
+            </StyledLink>
+
+            <StyledLink to="/bathroom">
+              <li>
+                <FaToilet
+                  size={25}
+                  style={{ marginBottom: "5px" }}
+                  className={styles.iconsNav}
+                />{" "}
+                Baño
               </li>
             </StyledLink>
           </ul>

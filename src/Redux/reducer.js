@@ -19,6 +19,8 @@ import {
   FILTER_PRODUCTS_BY_GENDER,
   FILTER_PRODUCTS_BY_TYPE,
   FILTER_PRODUCT_BY_PRICE,
+  GET_ATTENDANCE,
+  GET_BATHROOM,
   GET_NOT_REVIEW,
   GET_ORDERS,
   GET_PRODUCTS,
@@ -35,6 +37,8 @@ import {
   REMOVE_FAVORITE,
   REMOVE_FROM_CART,
   SIGNUP,
+  UPDATE_ATTENDANCE,
+  UPDATE_BATHROOM,
   UPDATE_USER,
 } from "./actionsTypes";
 
@@ -50,6 +54,8 @@ const initialState = {
   allProducts: [],
   users: [],
   user: null,
+  attendance: null,
+  bathroom: null,
   productId: [],
   cart: [],
   loadingLoagin_Register: false,
@@ -171,6 +177,37 @@ const rootReducer = (state = initialState, { type, payload }) => {
         products: payload,
         allProducts: payload,
       };
+
+    case GET_ATTENDANCE:
+      localStorage.setItem("attendance", JSON.stringify(payload));
+      return {
+        ...state,
+        attendance: payload,
+      };
+
+    case UPDATE_ATTENDANCE:
+      localStorage.setItem("attendance", JSON.stringify(payload));
+      return {
+        ...state,
+        attendance: payload,
+      };
+
+    case GET_BATHROOM:
+      console.log("payload en get bathroom", payload);
+      localStorage.setItem("bathroom", JSON.stringify(payload));
+      console.log("GET BATHROOM DE REDUCER EJECUTADO");
+      return {
+        ...state,
+        bathroom: payload,
+      };
+
+    case UPDATE_BATHROOM:
+      localStorage.setItem("bathroom", JSON.stringify(payload));
+      return {
+        ...state,
+        bathroom: payload,
+      };
+
     case GET_PRODUCT_BY_ID:
       return {
         ...state,
@@ -239,10 +276,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
       };
 
     case LOGOUT:
-      console.log("entro al reducer logout");
       return {
         ...state,
         user: null,
+        attendance: null,
+        bathroom: null,
         myFavorites: [],
       };
 

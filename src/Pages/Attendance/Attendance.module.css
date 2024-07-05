@@ -1,0 +1,12 @@
+/* Attendance.module.css */
+.enabled {
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+}
+
+.disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}

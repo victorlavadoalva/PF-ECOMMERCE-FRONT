@@ -1,6 +1,6 @@
 // import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
-import { RiLockPasswordLine, RiMailLine } from 'react-icons/ri';
+import { RiLockPasswordLine, RiMailLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { LoadingForm, LoginGoogle } from "../../Components";
@@ -34,16 +34,18 @@ function Login() {
     }
     if (errorsBack) {
       const { errorLogin } = errorsBack;
-      console.log(errorLogin);
-      if(errorLogin && Object.keys(errorLogin).length > 0) {
+      if (errorLogin && Object.keys(errorLogin).length > 0) {
         setTimeout(() => {
-        dispatch(LoadingActionForm(false));
-        const validationErrors = validateLoginForm(values.email, values.password, errorLogin);
-        setErrors(validationErrors);
-      }, 500);
+          dispatch(LoadingActionForm(false));
+          const validationErrors = validateLoginForm(
+            values.email,
+            values.password,
+            errorLogin
+          );
+          setErrors(validationErrors);
+        }, 500);
       }
     }
-    
   }, [user, errorsBack]);
 
   const handleInputChange = (e) => {
@@ -56,7 +58,7 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(clearErrors())
+    dispatch(clearErrors());
     const { email, password } = values;
     console.log(email);
     const validationErrors = validateLoginForm(email, password);
@@ -73,18 +75,18 @@ function Login() {
   };
 
   return (
-    <div className='DivContainerForm'>
+    <div className="DivContainerForm">
       {loadingLoagin_Register && (
-        <div className='loading'>
+        <div className="loading">
           <LoadingForm />
         </div>
       )}
 
-      <p className='title'>Pixel Port</p>
-      <div className='DivForm'>
-        <form className='formhtml' onSubmit={handleSubmit}>
-          <div className='inputGroup'>
-            <RiMailLine className='inputIcon' />
+      <p className="title">Pixel Port</p>
+      <div className="DivForm">
+        <form className="formhtml" onSubmit={handleSubmit}>
+          <div className="inputGroup">
+            <RiMailLine className="inputIcon" />
             <input
               type="text"
               placeholder="Email..."
@@ -93,9 +95,9 @@ function Login() {
               onChange={handleInputChange}
             />
           </div>
-          {errors.email && <p className='errors'>{errors.email}</p>}
-          <div className='inputGroup'>
-            <RiLockPasswordLine className='inputIcon' />
+          {errors.email && <p className="errors">{errors.email}</p>}
+          <div className="inputGroup">
+            <RiLockPasswordLine className="inputIcon" />
             <input
               type="Password"
               placeholder="Enter Password"
@@ -104,27 +106,27 @@ function Login() {
               onChange={handleInputChange}
             />
           </div>
-          {errors.password && (
-            <p className='errors'>{errors.password}</p>
-          )}
-          <div className='containerForgotPassword'>
-          </div>
-          <div className='actions'>
-            <button className="cancel" onClick={() => navigate('/')}><b>Cancel</b></button>
-            <button className='submitButton' type="submit"><b>Login</b></button>
+          {errors.password && <p className="errors">{errors.password}</p>}
+          <div className="containerForgotPassword"></div>
+          <div className="actions">
+            <button className="cancel" onClick={() => navigate("/")}>
+              <b>Cancel</b>
+            </button>
+            <button className="submitButton" type="submit">
+              <b>Login</b>
+            </button>
           </div>
         </form>
         <div className="separador">
-              <hr />
-              <label>O</label>
-              <hr />
+          <hr />
+          <label>O</label>
+          <hr />
         </div>
-        <div className='socialLog'>
+        <div className="socialLog">
           <LoginGoogle />
         </div>
-
       </div>
-      <p className='signup'>
+      <p className="signup">
         Don't have an account?
         <StyledLink to="/signup">
           <b>Sign up</b>
